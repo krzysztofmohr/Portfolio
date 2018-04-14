@@ -28,7 +28,23 @@ export class AccountService {
   }
 
   sell(index: number): void {
+    let stock = this._stocks[index];
+    if(stock) {
+      this._balance = this.credit(stock.price, this.balance);
+      this._stocks.splice(index, 1);
+      this._cost = this.debit(stock.cost, this.cost);
+      this.calculateValue();
+    }
+  }
 
+  init() {
+
+  }
+
+  reset() {
+    this._stocks = [];
+    this._balance = defaultBalance;
+    this._value = this._cost = 0;
   }
 
   private debit(amount: number, balance: number): number {
